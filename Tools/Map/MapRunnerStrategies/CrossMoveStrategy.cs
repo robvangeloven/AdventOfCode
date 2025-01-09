@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-public class MapRunnerCrossMoveStrategy<T> : IMapRunnerMoveStrategy<T>
+public class CrossMoveStrategy<T> : IMapRunnerMoveStrategy<T>
 {
     public IEnumerable<Tile<T>> GetNextPossibleMoves(int x, int y, Map<T> map)
     {

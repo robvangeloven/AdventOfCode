@@ -109,7 +109,7 @@ internal record Button
     public long Y { get; init; }
 }
 
-partial class Program
+internal partial class Program
 {
     [GeneratedRegex(@"\D+(?<X>\d*)\D+(?<Y>\d*)")]
     private static partial Regex CoordinateValuesMatch();

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public record RegionRunner<T> : MapRunner<T>
 {
+    private List<Map<T>> _regions = [];
+
     public RegionRunner(
         (int x, int y) startingPosition,
         IMapRunnerMoveStrategy<T> mapRunnerMoveStrategy,
@@ -13,6 +15,11 @@ public record RegionRunner<T> : MapRunner<T>
 
     public override Tile<T>? DecideNextMove(IEnumerable<Tile<T>> possibleMoves)
     {
+        foreach (var tile in possibleMoves.Where(x => !x.Visited))
+        {
 
+        }
+
+        return possibleMoves.First();
     }
 }
