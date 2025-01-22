@@ -6,7 +6,7 @@ public record Tile<T>
 
     public required int Y { get; init; }
 
-    public required T Value { get; set; }
+    public T? Value { get; set; }
 
     public int VisitCount { get; private set; }
 

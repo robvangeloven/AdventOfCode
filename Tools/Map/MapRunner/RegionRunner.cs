@@ -1,25 +1,37 @@
 ﻿namespace Tools.Map.MapRunner;
 
 using System.Collections.Generic;
+using Tools.Map.MapRunnerStrategies;
 
-public record RegionRunner<T> : MapRunner<T>
+public class RegionRunner<T> : MapRunner<T>
 {
-    private List<Map<T>> _regions = [];
+    private readonly List<Region> _regions;
+    private readonly RegionMapper<T> _regionMapper;
+    private readonly Map<T> _map;
 
     public RegionRunner(
-        (int x, int y) startingPosition,
-        IMapRunnerMoveStrategy<T> mapRunnerMoveStrategy,
-        Map<T> map) : base(startingPosition, mapRunnerMoveStrategy, map)
+        Tile<T> startingPosition,
+        Map<T> map) : base(startingPosition, new HorizontalScannerStrategy<T>(), map)
     {
+        _regions = [];
+        _regionMapper = new();
+        _map = map ?? throw new ArgumentNullException(nameof(map));
     }
 
-    public override Tile<T>? DecideNextMove(IEnumerable<Tile<T>> possibleMoves)
+    protected override Tile<T>? DecideNextMove(IEnumerable<Tile<T>> possibleMoves)
     {
-        foreach (var tile in possibleMoves.Where(x => !x.Visited))
+        var tile = possibleMoves.FirstOrDefault();
+
+        return tile;
+    }
+
+    protected override void Visit(Tile<T> tile)
+    {
+        if (tile.Visited == false)
         {
-
+            _regions.Add(_regionMapper.MapRegion(_map, tile));
         }
-
-        return possibleMoves.First();
     }
+
+    public IEnumerable<Region> Regions => _regions;
 }

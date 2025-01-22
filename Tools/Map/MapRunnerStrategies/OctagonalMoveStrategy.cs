@@ -4,9 +4,11 @@ using System.Collections.Generic;
 
 public class OctagonalMoveStrategy<T> : IMapRunnerMoveStrategy<T>
 {
-    public IEnumerable<Tile<T>> GetNextPossibleMoves(int x, int y, Map<T> map)
+    public IEnumerable<Tile<T>> GetNextPossibleMoves(Tile<T> startTile, Map<T> map)
     {
         var result = new List<Tile<T>>(8);
+        var x = startTile.X;
+        var y = startTile.Y;
 
         if (map.TryGetValue(x - 1, y - 1, out var tile))
         {

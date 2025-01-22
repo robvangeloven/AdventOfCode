@@ -2,5 +2,5 @@
 
 public interface IMapRunnerMoveStrategy<T>
 {
-    IEnumerable<Tile<T>> GetNextPossibleMoves(int x, int y, Map<T> map);
+    IEnumerable<Tile<T>> GetNextPossibleMoves(Tile<T> startTile, Map<T> map);
 }
