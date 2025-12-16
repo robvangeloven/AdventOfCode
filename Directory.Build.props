@@ -1,10 +1,10 @@
 <Project>
 	<PropertyGroup>
 		<GenerateDocumentationFile>False</GenerateDocumentationFile>
-		<LangVersion>latest</LangVersion>
-		<Nullable>enable</Nullable>
+		<LangVersion>14</LangVersion>
+		<TargetFramework>net10.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<TargetFramework>net9.0</TargetFramework>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<PropertyGroup>
