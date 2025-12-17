@@ -2,7 +2,6 @@
 
 using System.Threading.Tasks;
 using AdventOfCode.Attributes;
-using AdventOfCode.Tools.Map;
 
 [AdventOfCodeDay(2024, 10)]
 internal class Day10 : IAdventOfCodeDay
@@ -69,7 +68,7 @@ internal class Day10 : IAdventOfCodeDay
             return 1;
         }
 
-        var nextSteps = GetNextSteps(x, y, value, map, partTwo);
+        var nextSteps = GetNextSteps(x, y, map, partTwo);
 
         foreach (var step in nextSteps)
         {
@@ -89,12 +88,9 @@ internal class Day10 : IAdventOfCodeDay
         return (partTwo || !map[targetValue.y][targetValue.x].Visited) && map[targetValue.y][targetValue.x].Value - map[currentValue.y][currentValue.x].Value == 1;
     }
 
-    private IEnumerable<Step> GetNextSteps(int x, int y, int startingValue, Tile[][] map, bool partTwo)
+    private IEnumerable<Step> GetNextSteps(int x, int y, Tile[][] map, bool partTwo)
     {
         var result = new List<Step>();
-
-        var yStart = y - 1 < 0 ? 0 : y - 1;
-        var yEnd = y + 2 > map.Length ? map.Length : y + 2;
 
         var newX = x;
         var newY = y - 1;
@@ -180,5 +176,4 @@ internal class Day10 : IAdventOfCodeDay
     {
         public bool Visited { get; set; } = Visited;
     };
-
 }

@@ -4,8 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-var year = 2024;
-var day = 17;
+var year = 2025;
+var day = 1;
 
 var host = Host.CreateApplicationBuilder(args);
 

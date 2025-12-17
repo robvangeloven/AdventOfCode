@@ -49,14 +49,13 @@ internal class Day6 : IAdventOfCodeDay
     {
         var (guardX, guardY, map) = Load();
 
-        var answer = 0;
         var guard = new Guard(guardY, guardX, map);
 
         while (guard.Move())
         {
         }
 
-        answer = guard.StepCounter;
+        var answer = guard.StepCounter;
 
         return $"{answer}";
     }
@@ -65,20 +64,18 @@ internal class Day6 : IAdventOfCodeDay
     {
         var (guardX, guardY, map) = Load();
 
-        var answer = 0;
         var guard = new Guard(guardY, guardX, map);
 
         while (guard.Move())
         {
         }
 
-        answer = guard.ShenanigansCounter;
+        var answer = guard.ShenanigansCounter;
 
         guard.PrintMap();
 
         return $"{answer}";
     }
-
 
     public enum Direction
     {
