@@ -21,13 +21,15 @@ internal class PuzzleInputHelper
 
     private static async Task DownloadInput(int year, int day, string sessionToken, string downloadPath)
     {
-        Console.WriteLine("Fetching input...");
+        var inputUrl = $"https://adventofcode.com/{year}/day/{day}/input";
+
+        Console.WriteLine($"Downloading puzzle input from '{inputUrl}'");
 
         using (var handler = new HttpClientHandler { UseCookies = false })
         {
             using var client = new HttpClient(handler);
 
-            var message = new HttpRequestMessage(HttpMethod.Get, $"https://adventofcode.com/{year}/day/{day}/input");
+            var message = new HttpRequestMessage(HttpMethod.Get, inputUrl);
             message.Headers.Add("Cookie", $"session={sessionToken}");
             message.Headers.TryAddWithoutValidation(HeaderNames.UserAgent, "github.com/robvangeloven/AdventOfCode by rob@xprtz.net");
             var result = await client.SendAsync(message);
@@ -38,7 +40,7 @@ internal class PuzzleInputHelper
             }
             catch (HttpRequestException ex)
             {
-                throw new NotSupportedException($"Couldn't get problem input, maybe your session token is old. Please manually provide the problem input at \"\\Inputs\\Day{day}.txt\"", ex);
+                throw new NotSupportedException($"Couldn't get problem input, maybe your session token is old. Please manually provide the problem input at '{GetInputPath(year, day)}'", ex);
             }
 
             var responseBody = await result.Content.ReadAsStringAsync();
@@ -48,7 +50,7 @@ internal class PuzzleInputHelper
             File.WriteAllText(downloadPath, responseBody.ReplaceLineEndings().TrimEnd());
         }
 
-        Console.WriteLine("Input successfully fetched");
+        Console.WriteLine("Puzzle input successfully fetched");
     }
 
     public async Task<string> GetPuzzleInput(int year, int day)
@@ -57,7 +59,7 @@ internal class PuzzleInputHelper
 
         if (!File.Exists(path))
         {
-            var sessionToken = _configuration.GetValue<string>("SessionToken") ?? throw new NotSupportedException($"No session token available to get input. Please manually provide the problem input at \"\\Inputs\\Day.txt\"");
+            var sessionToken = _configuration.GetValue<string>("SessionToken") ?? throw new NotSupportedException($"No session token available to get puzzle input.");
             await DownloadInput(year, day, sessionToken, path);
         }
 
