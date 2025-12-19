@@ -3,15 +3,25 @@ using AdventOfCode.Runner;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Net.Http.Headers;
 
 var year = 2025;
-var day = 2;
+var day = 3;
 
 var host = Host.CreateApplicationBuilder(args);
 
 host.Configuration.AddUserSecrets<Program>();
 
-host.Services.AddSingleton<PuzzleInputHelper>();
+host.Services.AddHttpClient<PuzzleInputHelper>(client =>
+{
+    var sessionToken = host.Configuration.GetValue<string>("SessionToken") ?? throw new NotSupportedException($"No session token available to get puzzle input.");
+
+    client.BaseAddress = new Uri("https://adventofcode.com");
+    client.DefaultRequestHeaders.Add(HeaderNames.Cookie, $"session={sessionToken}");
+    client.DefaultRequestHeaders.TryAddWithoutValidation(HeaderNames.UserAgent, "github.com/robvangeloven/AdventOfCode by rob@xprtz.net");
+});
+
+host.Services.AddScoped<PuzzleInputHelper>();
 host.Services.AddAdventOfCodeDays();
 
 var app = host.Build();
